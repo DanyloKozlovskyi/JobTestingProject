@@ -1,0 +1,43 @@
+﻿@model ShortenedUrlAddRequest
+@{
+    ViewBag.Title = "Create Short Url";
+}
+
+<a asp-controller="ShortenedUrl" asp-action="Index" class="link-hover">Back to Urls List</a>
+<h2>Generate Short Url</h2>
+<div class="w-50">
+    <form asp-controller="ShortenedUrl" asp-action="Create" method="post">
+        @*Long Url*@
+        <div class="form-field flex">
+            <div class="w-25">
+                <label for="LongUrl" class="form-label pt">Long Url</label>
+            </div>
+            <div class="flex-1">
+                <input asp-for="LongUrl" class="form-input" />
+                <span asp-validation-for="LongUrl" class="text-red"></span>
+            </div>
+        </div>
+        @*Submit*@
+        <div class="form-field flex">
+            <div class="w-25">
+            </div>
+            <div class="flex-1">
+                <button class="button button-green-back">Create</button>
+
+                @if (ViewBag.Errors != null)
+                {
+                    <div class="text-red ml">
+                        <ul>
+                            @foreach (string error in ViewBag.Errors)
+                            {
+                                <li class="ml">@error</li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+
+        @*<div asp-validation-summary="All"></div>*@
+    </form>
+</div>

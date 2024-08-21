@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ShortenedUrlResponse>
+@{
+    ViewBag.Title = "Shorten Url";
+}
+<form action="~/index" method="get">
+    <h1>@ViewBag.Title</h1>
+    @if (ViewBag.user != null)
+    {
+        <a href="~/create" class="ml">Create Short Url</a>
+    }
+    <a href="~/person/personPDF" class="ml">Person PDF</a>
+    <a href="~/person/personCSV" class="ml">Person CSV</a>
+    <a href="~/Login" class="ml">Sign in</a>
+    <table class="table w-100 mt persons">
+        <thead>
+            <tr>
+                @await Html.PartialAsync("_GridColumnHeader",
+                new ViewDataDictionary(ViewData)
+                {
+                {"ColumnName", nameof(ShortenedUrlResponse.LongUrl)},
+                {"DisplayName", "Url before shortening"},
+                })
+                @await Html.PartialAsync("_GridColumnHeader",
+                new ViewDataDictionary(ViewData)
+                {
+                {"ColumnName", nameof(ShortenedUrlResponse.ShortUrl)},
+                {"DisplayName", "Url after shortening"}
+                })
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ShortenedUrlResponse url in @Model)
+            {
+                <tr>
+                    <td>@url.LongUrl</td>
+                    <td>@url.ShortUrl</td>
+                    @if (ViewBag.user != null)
+                    {
+                        <td>
+                            <a asp-controller="ShortenedUrl" asp-action="ShortUrlInfo"
+                       asp-route-urlId="@url.Id">Details</a>
+                            <a asp-controller="ShortenedUrl" asp-action="Delete"
+                       asp-route-urlId="@url.Id">Delete</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

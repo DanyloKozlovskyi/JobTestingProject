@@ -1,0 +1,50 @@
+﻿@model ShortenedUrlUpdateRequest
+@{
+    ViewBag.Title = "Delete Url";
+}
+
+<a asp-controller="ShortenedUrl" asp-action="Delete" class="link-hover">Back to People List</a>
+<h2>Delete Url</h2>
+<div class="w-50">
+    <form asp-controller="ShortenedUrl" asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        @*Long Url*@
+        <div class="form-field flex">
+            <div class="w-25">
+                <label for="LongUrl" class="form-label pt">Long Url</label>
+            </div>
+            <div class="flex-1">
+                <input asp-for="LongUrl" class="form-input" />
+                <span asp-validation-for="LongUrl" class="text-red"></span>
+            </div>
+        </div>
+        @*Shortened Url*@
+        <div class="form-field flex">
+            <div class="w-25">
+                <label for="ShortUrl" class="form-label pt">Shortened Url</label>
+            </div>
+            <div class="flex-1">
+                <input asp-for="ShortUrl" class="form-input" />
+                <span asp-validation-for="ShortUrl" class="text-red"></span>
+            </div>
+        </div>
+        @*Submit*@
+        <div class="form-field flex">
+            <div class="flex-1">
+                <button class="button button-green-back">Delete</button>
+            </div>
+        </div>
+        @*@if(ViewBag.Errors != null)
+        {
+        <div class="text-red ml">
+        <ul>
+        @foreach (string error in ViewBag.Errors)
+        {
+        <li class="ml">@error</li>
+        }
+        </ul>
+        </div>
+        }*@
+        <div asp-validation-summary="All"></div>
+    </form>
+</div>

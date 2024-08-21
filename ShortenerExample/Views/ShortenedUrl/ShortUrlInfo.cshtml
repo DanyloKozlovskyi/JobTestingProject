@@ -1,0 +1,56 @@
+﻿@model ShortenedUrlResponse
+@{
+    ViewBag.Title = "Short Url Info";
+}
+<form action="~/index" method="get">
+    <h1>@ViewBag.Title</h1>
+    <a asp-controller="ShortenedUrl" asp-action="Index" class="link-hover">Back to Urls List</a>
+    <table class="table w-100 mt persons">
+        <thead>
+            <tr>
+                @await Html.PartialAsync("_GridColumnHeader",
+                new ViewDataDictionary(ViewData)
+                {
+                {"ColumnName", nameof(ShortenedUrlResponse.LongUrl)},
+                {"DisplayName", "Url before shortening"},
+                })
+                @await Html.PartialAsync("_GridColumnHeader",
+                new ViewDataDictionary(ViewData)
+                {
+                {"ColumnName", nameof(ShortenedUrlResponse.ShortUrl)},
+                {"DisplayName", "Url after shortening"}
+                })
+                @await Html.PartialAsync("_GridColumnHeader",
+                new ViewDataDictionary(ViewData)
+                {
+                {"ColumnName", nameof(ShortenedUrlResponse.CreatedOnUtc)},
+                {"DisplayName", "The date Url was created"}
+                })
+                @await Html.PartialAsync("_GridColumnHeader",
+                new ViewDataDictionary(ViewData)
+                {
+                {"ColumnName", nameof(ShortenedUrlResponse.User)},
+                {"DisplayName", "UserName"}
+                })
+                @* Add PersonName here*@
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>@Model.LongUrl</td>
+                    <td>@Model.ShortUrl</td>
+                    <td>@Model.CreatedOnUtc.ToShortDateString()</td>
+                    <td>@Model.User.UserName</td>
+                    @if (ViewBag.user != null)
+                    {
+                        <td>
+                            <a asp-controller="ShortenedUrl" asp-action="ShortUrlInfo"
+                       asp-route-urlId="@Model.Id">Details</a>
+                            <a asp-controller="ShortenedUrl" asp-action="Delete"
+                       asp-route-urlId="@Model.Id">Delete</a>
+                        </td>
+                    }
+                </tr>
+        </tbody>
+    </table>
+</form>
